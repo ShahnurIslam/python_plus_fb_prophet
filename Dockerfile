@@ -12,4 +12,4 @@ FROM python:3.7.0 as app
 COPY --from=builder /root/.local /root/.local
 WORKDIR app
 ENV PATH=/root/.local/bin:$PATH
-
+Run pip install prophet
