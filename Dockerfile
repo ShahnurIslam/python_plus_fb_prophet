@@ -1,11 +1,15 @@
-FROM python:3.7.0
-
+FROM python:3.7.0 as builder
 RUN apt-get update \
 && apt-get install gcc -y \
 && apt-get clean
-
+COPY requirements.txt /app/requirements.txt
+WORKDIR app
+RUN pip install --user -r requirements.txt
 COPY . /app
+# Here is the production image
 
-WORKDIR /app
+FROM python:3.7.0 as app
+COPY --from=builder /root/.local /root/.local
+WORKDIR app
+ENV PATH=/root/.local/bin:$PATH
 
-RUN pip install -r requirements.txt
