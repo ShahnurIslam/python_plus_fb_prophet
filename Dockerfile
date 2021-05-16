@@ -5,6 +5,7 @@ RUN apt-get update \
 COPY requirements.txt /app/requirements.txt
 WORKDIR app
 RUN pip install --user -r requirements.txt
+RUN pip freeze
 COPY . /app
 # Here is the production image
 
